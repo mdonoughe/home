@@ -1,0 +1,47 @@
+startup:
+  alias: startup
+  sequence:
+  - data:
+      entity_id: switch.bowser
+    service: switch.turn_on
+  - data:
+      away_mode: false
+      entity_id: climate.downstairs
+    service: climate.set_away_mode
+shutdown:
+  alias: shutdown
+  sequence:
+  - data:
+      entity_id: group.all_lights
+    service: light.turn_off
+  - data:
+      entity_id: switch.computer_lamp
+    service: switch.turn_off
+  - data:
+      entity_id: switch.bowser
+    service: switch.turn_off
+  - data:
+      away_mode: true
+      entity_id: climate.downstairs
+    service: climate.set_away_mode
+  - data:
+      entity_id:
+      - media_player.downstairs_home
+      - media_player.upstairs_home
+    service: media_player.media_stop
+  - data:
+      entity_id:
+      - media_player.receiver
+      - media_player.shield
+    service: media_player.turn_off
+'1503890262874':
+  alias: goodnight
+  sequence:
+  - data:
+      entity_id:
+      - switch.bowser
+      - switch.computer_lamp
+    service: switch.turn_off
+  - data:
+      entity_id: group.all_lights
+    service: light.turn_off

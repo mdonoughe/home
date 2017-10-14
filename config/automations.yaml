@@ -1,0 +1,208 @@
+- action:
+  - data:
+      entity_id: light.stair_lights
+    service: light.turn_off
+  alias: auto stairs off after timer
+  id: '1501402300361'
+  trigger:
+  - entity_id: light.stair_lights
+    for:
+      minutes: 3
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.motion_stairs
+    from: 'on'
+    platform: state
+    to: 'off'
+  - entity_id: binary_sensor.motion_upstairs
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.motion_stairs
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.motion_upstairs
+    state: 'off'
+- action:
+  - data: {}
+    service: script.shutdown
+  alias: auto shutdown when away
+  id: '1501406443734'
+  trigger:
+  - entity_id: binary_sensor.presence
+    from: 'on'
+    platform: state
+    to: 'off'
+    for:
+      minutes: 5
+- action:
+  - data: {}
+    service: script.startup
+  alias: auto startup when home
+  id: '1501968460139'
+  trigger:
+  - entity_id: binary_sensor.presence
+    from: 'off'
+    platform: state
+    to: 'on'
+- alias: reboot modem when internet stops
+  id: '1501968460140'
+  trigger:
+  - entity_id: sensor.google_wifi_status
+    for:
+      minutes: 1
+    from: Online
+    platform: state
+    to: Offline
+  action:
+  - data:
+      entity_id: switch.modem
+    service: switch.turn_off
+  - delay: 5
+  - data:
+      entity_id: switch.modem
+    service: switch.turn_on
+- action:
+  - data:
+      entity_id: light.stair_lights
+    service: light.turn_on
+  alias: auto stairs on with motion
+  condition:
+  - below: '40'
+    condition: numeric_state
+    entity_id: sensor.estimated_outdoor_brightness
+  id: '1503200288059'
+  trigger:
+  - entity_id: binary_sensor.motion_stairs
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.motion_upstairs
+    from: 'off'
+    platform: state
+    to: 'on'
+- action:
+  - data:
+      entity_id: light.office_lights
+    service: light.turn_on
+  alias: auto office lights on after dark
+  condition:
+  - condition: state
+    entity_id: switch.bowser
+    state: 'on'
+  - condition: state
+    entity_id: binary_sensor.presence
+    state: 'on'
+  id: '1503261964656'
+  trigger:
+  - below: '30'
+    entity_id: sensor.estimated_outdoor_brightness
+    platform: numeric_state
+- action:
+  - data:
+      message: You left something open.
+      title: House open
+    service: notify.push
+  alias: notify on left open
+  id: '1503273486895'
+  trigger:
+  - platform: template
+    value_template: '{{ is_state("cover.garage_door_opener", "open") and not is_state("device_tracker.pixel_sailfish",
+      "home") }}'
+- action:
+  - data_template:
+      message: Home Assistant {{ states.updater.updater.state }} is now available.
+      title: New Home Assistant Release
+      data:
+        disable_notification: true
+    service: notify.telegram
+  alias: notify on new home assistant release
+  id: '1503275062301'
+  trigger:
+  - entity_id: updater.updater
+    platform: state
+- action:
+  - data:
+      brightness: 255
+      entity_id: light.bedroom_lights
+      kelvin: 2000
+      transition: 1800
+    service: light.turn_on
+  alias: wake up for work
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  - condition: template
+    value_template: '{{ states.calendar.work_holiday.state == "off" or states.calendar.work_holiday.attributes.all_day
+      == false }}'
+  - condition: template
+    value_template: '{{ states.calendar.work_vacation.state == "off" or states.calendar.work_vacation.attributes.all_day
+      == false }}'
+  id: '1503862324643'
+  trigger:
+  - at: '7:00'
+    platform: time
+- action:
+  - data:
+      entity_id: climate.downstairs
+      fan_mode: 'on'
+    service: climate.set_fan_mode
+  - delay: 900
+  - data:
+      entity_id: climate.downstairs
+      fan_mode: auto
+    service: climate.set_fan_mode
+  alias: periodic fan downstairs
+  condition:
+  - condition: state
+    entity_id: binary_sensor.presence
+    state: 'on'
+  id: '1503863375784'
+  trigger:
+  - entity_id: binary_sensor.presence
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.downstairs_thermostat_fan
+    platform: state
+    to: 'off'
+    for:
+      minutes: 45
+  - event: start
+    platform: homeassistant
+- action:
+  - data:
+      entity_id: climate.upstairs
+      fan_mode: 'on'
+    service: climate.set_fan_mode
+  - delay: 900
+  - data:
+      entity_id: climate.upstairs
+      fan_mode: auto
+    service: climate.set_fan_mode
+  alias: periodic fan upstairs
+  condition:
+  - condition: state
+    entity_id: binary_sensor.presence
+    state: 'on'
+  id: '1503863375785'
+  trigger:
+  - entity_id: binary_sensor.presence
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.upstairs_thermostat_fan
+    platform: state
+    to: 'off'
+    for:
+      minutes: 45
+  - event: start
+    platform: homeassistant

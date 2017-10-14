@@ -1,0 +1,9 @@
+
+pixel_sailfish:
+  hide_if_away: false
+  icon:
+  mac:
+  name: pixel
+  picture:
+  track: true
+  vendor:

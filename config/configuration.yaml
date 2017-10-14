@@ -1,0 +1,274 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: !secret address
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/New_York
+
+  customize: !include customize.yaml
+  customize_glob:
+    light.bedroom_light_?:
+      hidden: true
+    light.office_light_?:
+      hidden: true
+    sensor.motion_*:
+      hidden: true
+    sensor.window_*:
+      hidden: true
+    binary_sensor.motion_*_sensor:
+      hidden: true
+    binary_sensor.window_*_sensor:
+      hidden: true
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: !secret base_url
+
+mqtt:
+  broker: 10.8.0.1
+  port: 1883
+  username: tiny
+  password: !secret mqtt_password
+
+zwave:
+  usb_path: /dev/zwave
+  network_key: !secret zwave_key
+
+device_tracker:
+  - platform: owntracks
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  include_used_components: true
+
+# Discover some devices automatically
+#discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+binary_sensor:
+  - platform: template
+    sensors:
+      motion_stairs:
+        value_template: '{{ states.sensor.motion_stairs_alarm_level.state != "0" }}'
+        friendly_name: 'Stairs Motion'
+        device_class: motion
+        entity_id:
+          - sensor.motion_stairs_alarm_level
+      motion_upstairs:
+        value_template: '{{ states.sensor.motion_upstairs_alarm_level.state != "0" }}'
+        friendly_name: 'Upstairs Motion'
+        device_class: motion
+        entity_id:
+          - sensor.motion_upstairs_alarm_level
+      window_office_computer:
+        value_template: '{{ states.sensor.window_office_computer_alarm_level.state != "0" }}'
+        friendly_name: 'Window Office Computer'
+        device_class: opening
+        entity_id:
+          - sensor.window_office_computer_alarm_level
+      presence:
+        value_template: '{{ states.device_tracker.pixel_sailfish.state == "home" }}'
+        friendly_name: 'presence'
+        device_class: occupancy
+        entity_id:
+          - device_tracker.pixel_sailfish
+
+cover:
+  - platform: myq
+    username: !secret myq_user
+    password: !secret myq_password
+    type: chamberlain
+
+google:
+  client_id: !secret calendar_id
+  client_secret: !secret calendar_secret
+
+# Weather prediction
+sensor:
+  - platform: darksky
+    api_key: !secret darksky_key
+    monitored_conditions:
+      - summary
+      - icon
+      - nearest_storm_distance
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - temperature
+      - apparent_temperature
+      - dew_point
+      - wind_speed
+      - wind_bearing
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+      - ozone
+      - temperature_max
+      - temperature_min
+      - apparent_temperature_max
+      - apparent_temperature_min
+      - precip_intensity_max
+  - platform: google_wifi
+    host: 192.168.86.1
+    monitored_conditions:
+      - uptime
+      - local_ip
+      - status
+  - platform: fedex
+    username: !secret fedex_user
+    password: !secret fedex_password
+  - platform: ups
+    username: !secret ups_user
+    password: !secret ups_password
+  - platform: template
+    sensors:
+      estimated_outdoor_brightness:
+        friendly_name: estimated outdoor brightness
+        unit_of_measurement: '%'
+        value_template: '{{ 100 * ([[0, states.sun.sun.attributes.elevation / 20] | max, 1] | min ** 2) * ([0, (90 - states.sensor.dark_sky_cloud_coverage.state | float) / 90] | max ** 0.125) }}'
+        entity_id:
+          - sun.sun
+          - sensor.dark_sky_cloud_coverage
+
+media_player:
+  - platform: cast
+    host: 192.168.86.44
+  - platform: cast
+    host: 192.168.86.45
+  - platform: cast
+    host: 192.168.86.52
+  - platform: gpmdp
+    host: 192.168.86.34
+  - platform: onkyo
+    host: 192.168.86.65
+    name: receiver
+
+nest:
+  client_id: !secret nest_clientid
+  client_secret: !secret nest_secret
+  binary_sensors:
+    monitored_conditions:
+      - fan
+  sensors:
+    monitored_conditions:
+      - humidity
+      - operation_mode
+      - temperature
+      - target
+
+notify:
+  - name: telegram
+    platform: telegram
+    chat_id: !secret telegram_chat
+  - name: push
+    platform: html5
+    gcm_api_key: !secret gcm_key
+    gcm_sender_id: !secret gcm_sender
+
+light:
+  - platform: hue
+    host: 192.168.86.46
+  - platform: template
+    lights:
+      office_lights:
+        friendly_name: "Office Lights"
+        value_template: '{{ is_state("switch.computer_lamp", "on") or is_state("light.office_hue", "on") }}'
+        level_template: '{% if is_state("light.office_hue", "on") %}{{ states.light.office_hue.attributes.brightness }}{% else %}0{% endif %}'
+        turn_on:
+          - service: light.turn_on
+            data:
+              entity_id: light.office_hue
+          - service: switch.turn_on
+            data:
+              entity_id: switch.computer_lamp
+        turn_off:
+          - service: light.turn_off
+            data:
+              entity_id: light.office_hue
+          - service: switch.turn_off
+            data:
+              entity_id: switch.computer_lamp
+        set_level:
+          - service: light.turn_on
+            data:
+              entity_id: light.office_hue
+          - service: switch.turn_on
+            data_template:
+              entity_id: switch.computer_lamp
+              brightness: "{{ brightness }}"
+
+lutron_caseta:
+  host: 192.168.86.49
+  key: lutron.key
+  cert: lutron.crt
+  ca: lutron-ca.crt
+
+shell_command:
+  sleep_bowser: !secret sleep_command
+
+switch:
+  - platform: wake_on_lan
+    mac_address: "30-85-A9-96-6C-FD"
+    name: "Bowser"
+    host: "192.168.86.34"
+    broadcast_address: "192.168.86.34"
+    turn_off:
+      service: shell_command.sleep_bowser
+
+telegram_bot:
+  - platform: webhooks
+    api_key: !secret telegram_key
+    allowed_chat_ids:
+      - !secret telegram_chat
+
+wemo:
+  static:
+    - 192.168.86.68
+    - 192.168.86.71
+
+# Text to speech
+tts:
+  - platform: google
+
+usps:
+  username: !secret usps_user
+  password: !secret usps_password
+
+influxdb:
+  host: influx
+  database: home-assistant
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
