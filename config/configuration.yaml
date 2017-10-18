@@ -79,19 +79,19 @@ binary_sensor:
   - platform: template
     sensors:
       motion_stairs:
-        value_template: '{{ states.sensor.motion_stairs_alarm_level.state != "0" }}'
+        value_template: '{{ states.sensor.motion_stairs_alarm_level.state == "255" }}'
         friendly_name: 'Stairs Motion'
         device_class: motion
         entity_id:
           - sensor.motion_stairs_alarm_level
       motion_upstairs:
-        value_template: '{{ states.sensor.motion_upstairs_alarm_level.state != "0" }}'
+        value_template: '{{ states.sensor.motion_upstairs_alarm_level.state == "255" }}'
         friendly_name: 'Upstairs Motion'
         device_class: motion
         entity_id:
           - sensor.motion_upstairs_alarm_level
       window_office_computer:
-        value_template: '{{ states.sensor.window_office_computer_alarm_level.state != "0" }}'
+        value_template: '{{ states.sensor.window_office_computer_alarm_level.state == "255" }}'
         friendly_name: 'Window Office Computer'
         device_class: opening
         entity_id:

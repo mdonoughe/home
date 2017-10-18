@@ -7,7 +7,7 @@
   trigger:
   - entity_id: light.stair_lights
     for:
-      minutes: 3
+      minutes: 5
     from: 'off'
     platform: state
     to: 'on'
@@ -15,10 +15,14 @@
     from: 'on'
     platform: state
     to: 'off'
+    for:
+      minutes: 2
   - entity_id: binary_sensor.motion_upstairs
     from: 'on'
     platform: state
     to: 'off'
+    for:
+      minutes: 2
   condition:
   - condition: state
     entity_id: binary_sensor.motion_stairs
