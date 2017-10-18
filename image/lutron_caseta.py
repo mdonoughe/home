@@ -45,12 +45,14 @@ def setup(hass, base_config):
     from pylutron_caseta.smartbridge import Smartbridge
 
     config = base_config.get(DOMAIN)
-    hass.data[LUTRON_CASETA_SMARTBRIDGE] = Smartbridge(
-        hostname=config[CONF_HOST],
-        keyfile=hass.config.path(config[CONF_KEYFILE]),
-        certfile=hass.config.path(config[CONF_CERTFILE]),
-        ca_certs=hass.config.path(config[CONF_CA_CERTS])
-    )
+    keyfile = hass.config.path(config[CONF_KEYFILE])
+    certfile = hass.config.path(config[CONF_CERTFILE])
+    ca_certs = hass.config.path(config[CONF_CA_CERTS])
+    bridge = Smartbridge.connect(hostname=config[CONF_HOST],
+                                 keyfile=keyfile,
+                                 certfile=certfile,
+                                 ca_certs=ca_certs)
+    hass.data[LUTRON_CASETA_SMARTBRIDGE] = bridge
     if not hass.data[LUTRON_CASETA_SMARTBRIDGE].is_connected():
         _LOGGER.error("Unable to connect to Lutron smartbridge at %s",
                       config[CONF_HOST])
