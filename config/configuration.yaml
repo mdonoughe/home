@@ -75,6 +75,8 @@ logbook:
 # Track the sun
 sun:
 
+map:
+
 binary_sensor:
   - platform: template
     sensors:
@@ -268,6 +270,15 @@ usps:
 influxdb:
   host: influx
   database: home-assistant
+
+google_assistant:
+  project_id: !secret assistant_project_id
+  client_id: !secret assistant_client_id
+  access_token: !secret assistant_access_token
+  exposed_domains:
+    - switch
+    - light
+    - group
 
 group: !include groups.yaml
 automation: !include automations.yaml
