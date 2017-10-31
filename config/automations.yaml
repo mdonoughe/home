@@ -1,28 +1,28 @@
 - action:
   - data:
-      entity_id: light.stair_lights
+      entity_id: light.upstairs_hub_lights
     service: light.turn_off
   alias: auto stairs off after timer
   id: '1501402300361'
   trigger:
-  - entity_id: light.stair_lights
+  - entity_id: light.upstairs_hub_lights
     for:
       minutes: 5
     from: 'off'
     platform: state
     to: 'on'
   - entity_id: binary_sensor.motion_stairs
+    for:
+      minutes: 2
     from: 'on'
     platform: state
     to: 'off'
-    for:
-      minutes: 2
   - entity_id: binary_sensor.motion_upstairs
+    for:
+      minutes: 2
     from: 'on'
     platform: state
     to: 'off'
-    for:
-      minutes: 2
   condition:
   - condition: state
     entity_id: binary_sensor.motion_stairs
@@ -71,7 +71,7 @@
     service: switch.turn_on
 - action:
   - data:
-      entity_id: light.stair_lights
+      entity_id: light.upstairs_hub_lights
     service: light.turn_on
   alias: auto stairs on with motion
   condition:
