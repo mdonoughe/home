@@ -40,7 +40,8 @@ LUTRON_CASETA_COMPONENTS = [
 ]
 
 
-def setup(hass, base_config):
+@asyncio.coroutine
+def async_setup(hass, base_config):
     """Set up the Lutron component."""
     from pylutron_caseta.smartbridge import Smartbridge
 
@@ -48,11 +49,12 @@ def setup(hass, base_config):
     keyfile = hass.config.path(config[CONF_KEYFILE])
     certfile = hass.config.path(config[CONF_CERTFILE])
     ca_certs = hass.config.path(config[CONF_CA_CERTS])
-    bridge = Smartbridge.connect(hostname=config[CONF_HOST],
-                                 keyfile=keyfile,
-                                 certfile=certfile,
-                                 ca_certs=ca_certs)
+    bridge = Smartbridge.create_tls(hostname=config[CONF_HOST],
+                                    keyfile=keyfile,
+                                    certfile=certfile,
+                                    ca_certs=ca_certs)
     hass.data[LUTRON_CASETA_SMARTBRIDGE] = bridge
+    yield from bridge.connect()
     if not hass.data[LUTRON_CASETA_SMARTBRIDGE].is_connected():
         _LOGGER.error("Unable to connect to Lutron smartbridge at %s",
                       config[CONF_HOST])
