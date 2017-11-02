@@ -232,9 +232,9 @@ light:
 
 lutron_caseta:
   host: 192.168.86.49
-  key: lutron.key
-  cert: lutron.crt
-  ca: lutron-ca.crt
+  keyfile: lutron.key
+  certfile: lutron.crt
+  ca_certs: lutron-ca.crt
 
 shell_command:
   sleep_bowser: !secret sleep_command
