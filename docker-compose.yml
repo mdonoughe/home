@@ -3,7 +3,7 @@ version: '3'
 services:
   home-assistant:
     #image: homeassistant/home-assistant
-    build: image
+    build: home-assistant
     volumes:
       - ./config:/config
     devices:
