@@ -263,9 +263,9 @@ wemo:
 tts:
   - platform: google
 
-usps:
-  username: !secret usps_user
-  password: !secret usps_password
+#usps:
+#  username: !secret usps_user
+#  password: !secret usps_password
 
 influxdb:
   host: influx
