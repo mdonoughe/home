@@ -239,6 +239,12 @@ telegram_bot:
     allowed_chat_ids:
       - !secret telegram_chat
 
+timer:
+  upstairs_light_timer:
+    duration: '00:03:00'
+  downstairs_light_timer:
+    duration: '00:03:00'
+
 wemo:
   static:
     - 192.168.86.68

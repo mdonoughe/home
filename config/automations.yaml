@@ -1,35 +1,92 @@
-- action:
-  - data:
-      entity_id: light.upstairs_hub_lights
-    service: light.turn_off
-  alias: auto stairs off after timer
-  id: '1501402300361'
+- id: auto_upstairs_on_with_motion
+  alias: auto upstairs on with motion
   trigger:
-  - entity_id: light.upstairs_hub_lights
-    for:
-      minutes: 5
+  - entity_id: binary_sensor.motion_stairs
     from: 'off'
     platform: state
     to: 'on'
-  - entity_id: binary_sensor.motion_stairs
-    for:
-      minutes: 2
-    from: 'on'
-    platform: state
-    to: 'off'
   - entity_id: binary_sensor.motion_upstairs
-    for:
-      minutes: 2
-    from: 'on'
+    from: 'off'
     platform: state
-    to: 'off'
-  condition:
-  - condition: state
-    entity_id: binary_sensor.motion_stairs
-    state: 'off'
-  - condition: state
+    to: 'on'
+  action:
+  - service: timer.cancel
+    data:
+      entity_id: timer.upstairs_light_timer
+  - condition: and
+    conditions:
+    - condition: numeric_state
+      below: '40'
+      entity_id: sensor.estimated_outdoor_brightness
+  - service: light.turn_on
+    data:
+      entity_id: light.upstairs_hub_lights
+- id: begin_upstairs_off_timer
+  alias: begin upstairs off timer
+  trigger:
+  - platform: state
     entity_id: binary_sensor.motion_upstairs
-    state: 'off'
+    from: 'on'
+    to: 'off'
+  action:
+  - service: timer.start
+    data:
+      entity_id: timer.upstairs_light_timer
+- id: auto_upstairs_off_after_timer
+  alias: auto upstairs off after timer
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.upstairs_light_timer
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.upstairs_hub_lights
+- id: auto_downstairs_on_with_motion
+  alias: auto downstairs on with motion
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_stairs
+    from: 'off'
+    to: 'on'
+  action:
+  - service: timer.cancel
+    data:
+      entity_id: timer.downstairs_light_timer
+  - condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.estimated_outdoor_brightness
+      below: '40'
+    - condition: state
+      entity_id: light.upstairs_hub_lights
+      state: 'on'
+  - service: light.turn_on
+    data:
+      entity_id: light.downstairs_hub_lights
+- id: begin_downstairs_off_timer
+  alias: begin downstairs off timer
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_stairs
+    from: 'on'
+    to: 'off'
+  action:
+  - service: timer.start
+    data:
+      entity_id: timer.downstairs_light_timer
+- id: auto_downstairs_off_after_timer
+  alias: auto downstairs off after timer
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.downstairs_light_timer
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.downstairs_hub_lights
 - action:
   - data: {}
     service: script.shutdown
@@ -69,25 +126,6 @@
   - data:
       entity_id: switch.modem
     service: switch.turn_on
-- action:
-  - data:
-      entity_id: light.upstairs_hub_lights
-    service: light.turn_on
-  alias: auto stairs on with motion
-  condition:
-  - below: '40'
-    condition: numeric_state
-    entity_id: sensor.estimated_outdoor_brightness
-  id: '1503200288059'
-  trigger:
-  - entity_id: binary_sensor.motion_stairs
-    from: 'off'
-    platform: state
-    to: 'on'
-  - entity_id: binary_sensor.motion_upstairs
-    from: 'off'
-    platform: state
-    to: 'on'
 - action:
   - data:
       entity_id: group.office_lights
