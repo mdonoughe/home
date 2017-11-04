@@ -1,0 +1,125 @@
+default_view:
+  name: Home
+  view: yes
+  control: hidden
+  entities:
+    - automation.auto_shutdown_when_away
+    - automation.auto_startup_when_home
+    - automation.auto_stairs_off_after_timer
+    - automation.auto_stairs_on_with_motion
+    - automation.notify_on_left_open
+    - binary_sensor.presence
+    - calendar.home
+    - cover.garage_door_opener
+    - sensor.fedex
+    - sensor.ups
+    - sensor.usps
+    - script.startup
+    - script.shutdown
+    - script.goodnight
+
+me:
+  name: Me
+  view: yes
+  control: hidden
+  entities:
+    - automation.wake_up_for_work
+    - device_tracker.pixel_sailfish
+    - group.calendar
+    - script.goodnight
+
+office_lights:
+  name: Office Lights
+  entities:
+    - light.office_hue
+    - light.computer_lamp
+
+office:
+  name: Office
+  view: yes
+  control: hidden
+  entities:
+    - automation.auto_office_lights_on_after_dark
+    - binary_sensor.window_office_computer
+    - climate.upstairs
+    - group.office_lights
+    - media.gpm_desktop_player
+    - sensor.upstairs_thermostat_humidity
+    - sensor.upstairs_thermostat_temperature
+    - switch.bowser
+
+bedroom:
+  name: Bedroom
+  view: yes
+  control: hidden
+  entities:
+    - automation.wake_up_for_work
+    - climate.upstairs
+    - light.bedroom_lights
+    - sensor.upstairs_thermostat_humidity
+    - sensor.upstairs_thermostat_temperature
+
+upstairs:
+  name: Upstairs
+  view: yes
+  control: hidden
+  entities:
+    - automation.periodic_fan_upstairs
+    - binary_sensor.motion_upstairs
+    - binary_sensor.upstairs_thermostat_fan
+    - climate.upstairs
+    - light.upstairs_hub_lights
+    - media.upstairs_home
+    - sensor.upstairs_thermostat_humidity
+    - sensor.upstairs_thermostat_temperature
+
+downstairs:
+  name: Downstairs
+  view: yes
+  control: hidden
+  entities:
+    - automation.periodic_fan_downstairs
+    - binary_sensor.downstairs_thermostat_fan
+    - climate.downstairs
+    - group.living_room
+    - group.kitchen
+    - light.downstairs_hub_lights
+    - light.kitchen_lights
+    - light.living_room_lights
+    - media_player.downstairs_home
+    - media_player.receiver
+    - media_player.shield
+    - sensor.downstairs_thermostat_humidity
+    - sensor.downstairs_thermostat_temperature
+
+outside:
+  name: Outside
+  view: yes
+  control: hidden
+  entities:
+    - sensor.dark_sky_apparent_temperature
+    - sensor.dark_sky_cloud_coverage
+    - sensor.dark_sky_apparent_high_temperature
+    - sensor.dark_sky_low_apparent_temperature
+    - sensor.dark_sky_max_precip_intensity
+    - sensor.dark_sky_humidity
+    - sensor.dark_sky_nearest_storm_distance
+    - sensor.dark_sky_ozone
+    - sensor.dark_sky_precip
+    - sensor.dark_sky_precip_intensity
+    - sensor.dark_sky_precip_probability
+    - sensor.dark_sky_summary
+    - sensor.dark_sky_wind_speed
+    - sensor.estimated_outdoor_brightness
+    - sensor.sun
+
+internet:
+  name: Internet
+  view: yes
+  control: hidden
+  entities:
+    - automation.notify_on_new_home_assistant_release
+    - automation.reboot_modem_when_internet_stops
+    - sensor.google_wifi_local_ip
+    - sensor.google_wifi_status
+    - switch.modem

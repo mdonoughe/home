@@ -34,7 +34,7 @@ shutdown:
       - media_player.receiver
       - media_player.shield
     service: media_player.turn_off
-'1503890262874':
+goodnight:
   alias: goodnight
   sequence:
   - data:

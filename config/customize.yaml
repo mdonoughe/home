@@ -2,10 +2,12 @@ cover.myq:
   hidden: true
 cover.garage_door_opener:
   device_class: garage
-  friendly_name: garage door
+  friendly_name: Garage Door
 switch.modem:
   assumed_state: true
 light.bedroom:
   hidden: true
 light.office_hue:
-  hidden: true
+  hidden: false
+group.calendar:
+  friendly_name: Calendar

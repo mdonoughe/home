@@ -90,8 +90,8 @@
     to: 'on'
 - action:
   - data:
-      entity_id: light.office_lights
-    service: light.turn_on
+      entity_id: group.office_lights
+    service: homeassistant.turn_on
   alias: auto office lights on after dark
   condition:
   - condition: state
