@@ -11,3 +11,4 @@ light.office_hue:
   hidden: false
 group.calendar:
   friendly_name: Calendar
+  hidden: false
