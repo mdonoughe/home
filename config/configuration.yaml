@@ -38,18 +38,12 @@ http:
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   base_url: !secret base_url
 
-mqtt:
-  broker: 10.8.0.1
-  port: 1883
-  username: tiny
-  password: !secret mqtt_password
-
 zwave:
   usb_path: /dev/zwave
   network_key: !secret zwave_key
 
 device_tracker:
-  - platform: owntracks
+  - platform: gpslogger
 
 # Checks for available updates
 # Note: This component will send some information about your system to
