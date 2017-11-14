@@ -98,6 +98,9 @@ binary_sensor:
         device_class: occupancy
         entity_id:
           - device_tracker.pixel_sailfish
+  - platform: ping
+    host: 192.168.100.1
+    name: 'Modem Alive'
 
 cover:
   - platform: myq
@@ -156,6 +159,11 @@ sensor:
         entity_id:
           - sun.sun
           - sensor.dark_sky_cloud_coverage
+  - platform: scrape
+    resource: http://192.168.100.1/cmconnectionstatus.html
+    select: "tr:nth-of-type(4)"
+    name: Modem Connectivity
+    value_template: "{% set parts = value.split('\n') %}{% if parts[1] == 'Connectivity State' -%}{{ parts[2] }}{%- else -%}[unknown]{%- endif %}"
 
 media_player:
   - platform: cast
