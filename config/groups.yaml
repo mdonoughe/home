@@ -121,9 +121,12 @@ internet:
   control: hidden
   entities:
     - automation.notify_on_new_home_assistant_release
-    - automation.reboot_modem_when_internet_stops
+    - automation.enable_modem_reboot_loop
+    - automation.disable_modem_reboot_loop
+    - automation.modem_reboot_loop
     - binary_sensor.modem_alive
     - sensor.google_wifi_local_ip
     - sensor.google_wifi_status
     - sensor.modem_connectivity
     - switch.modem
+    - timer.modem_reboot_loop

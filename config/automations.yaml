@@ -109,23 +109,53 @@
     from: 'off'
     platform: state
     to: 'on'
-- alias: reboot modem when internet stops
-  id: '1501968460140'
+- id: enable_modem_reboot_loop
+  alias: enable modem reboot loop
   trigger:
-  - entity_id: sensor.google_wifi_status
-    for:
-      minutes: 1
-    from: Online
-    platform: state
-    to: Offline
+  - platform: state
+    entity_id: binary_sensor.modem_alive
+    from: 'on'
+    to: 'off'
   action:
-  - data:
+  - service: timer.start
+    data:
+      entity_id: timer.modem_reboot_loop
+      duration: 120
+- id: disable_modem_reboot_loop
+  alias: disable modem reboot loop
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.modem_alive
+    from: 'off'
+    to: 'on'
+  action:
+  - service: timer.cancel
+    data:
+      entity_id: timer.modem_reboot_loop
+- id: modem_reboot_loop
+  alias: modem reboot loop
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.modem_reboot_loop
+  action:
+  - service: switch.turn_off
+    data:
       entity_id: switch.modem
-    service: switch.turn_off
   - delay: 5
-  - data:
+  - service: switch.turn_on
+    data:
       entity_id: switch.modem
-    service: switch.turn_on
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.modem_alive
+      state: 'off'
+  - service: timer.start
+    data:
+      entity_id: timer.modem_reboot_loop
+      duration: 600
 - action:
   - data:
       entity_id: group.office_lights

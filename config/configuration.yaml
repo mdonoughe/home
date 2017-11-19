@@ -101,6 +101,7 @@ binary_sensor:
   - platform: ping
     host: 192.168.100.1
     name: 'Modem Alive'
+    scan_interval: 30
 
 cover:
   - platform: myq
@@ -246,6 +247,7 @@ timer:
     duration: '00:03:00'
   downstairs_light_timer:
     duration: '00:03:00'
+  modem_reboot_loop:
 
 wemo:
   static:
