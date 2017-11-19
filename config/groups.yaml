@@ -72,6 +72,7 @@ upstairs:
     - media.upstairs_home
     - sensor.upstairs_thermostat_humidity
     - sensor.upstairs_thermostat_temperature
+    - timer.upstairs_light_timer
 
 downstairs:
   name: Downstairs
@@ -91,6 +92,7 @@ downstairs:
     - media_player.shield
     - sensor.downstairs_thermostat_humidity
     - sensor.downstairs_thermostat_temperature
+    - timer.downstairs_light_timer
 
 outside:
   name: Outside
