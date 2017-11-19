@@ -1,4 +1,0 @@
-[submodule "home-assistant"]
-	path = home-assistant
-	url = https://github.com/mdonoughe/home-assistant.git
-	branch = pylutron-backport
