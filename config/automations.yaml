@@ -302,18 +302,10 @@
   trigger:
   - platform: numeric_state
     entity_id: sensor.estimated_outdoor_brightness
-    above: '50'
+    above: '60'
   - platform: time
     at: '23:00'
-  condition:
-  - condition: or
-    conditions:
-    - condition: numeric_state
-      above: '50'
-      entity_id: sensor.estimated_outdoor_brightness
-    - condition: time
-      after: '23:00'
   action:
-  - service: homeassistant.turn_on
+  - service: homeassistant.turn_off
     data:
       entity_id: group.christmas_lights
