@@ -235,6 +235,8 @@ switch:
     broadcast_address: "192.168.86.34"
     turn_off:
       service: shell_command.sleep_bowser
+  - platform: tplink
+    host: 192.168.86.88
 
 telegram_bot:
   - platform: webhooks
@@ -253,6 +255,7 @@ wemo:
   static:
     - 192.168.86.68
     - 192.168.86.71
+    - 192.168.86.89
 
 # Text to speech
 tts:

@@ -12,3 +12,10 @@ light.office_hue:
 group.calendar:
   friendly_name: Calendar
   hidden: false
+group.christmas_lights:
+  icon: mdi:pine-tree
+switch.tpmini1:
+  friendly_name: Porch Christmas Lights
+switch.wemo_switch_5ea:
+  assumed_state: true
+  friendly_name: Window Christmas Lights
