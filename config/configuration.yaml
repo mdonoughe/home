@@ -178,6 +178,17 @@ media_player:
   - platform: onkyo
     host: 192.168.86.65
     name: receiver
+  - platform: webostv
+    host: 192.168.86.90
+    name: Living Room TV
+    turn_on_action:
+      service: media_player.turn_on
+      data:
+        entity_id: media_player.shield
+    customize:
+      sources:
+        - HDMI2
+        - HDMI4
 
 nest:
   client_id: !secret nest_clientid

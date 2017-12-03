@@ -62,6 +62,7 @@ bedroom:
     - automation.wake_up_for_work
     - climate.upstairs
     - light.bedroom_lights
+    - media_player.minitv
     - sensor.upstairs_thermostat_humidity
     - sensor.upstairs_thermostat_temperature
 
@@ -96,6 +97,7 @@ downstairs:
     - media_player.downstairs_home
     - media_player.receiver
     - media_player.shield
+    - media_player.living_room_tv
     - sensor.downstairs_thermostat_humidity
     - sensor.downstairs_thermostat_temperature
     - timer.downstairs_light_timer

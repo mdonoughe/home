@@ -16,5 +16,6 @@
 /config/upsmychoice_cookies.pickle
 /config/usps_cache.sqlite
 /config/usps_cookies.pickle
+/config/webostv.conf
 /config/zwcfg_0x*.xml
 /docker-compose.override.yml
