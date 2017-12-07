@@ -19,3 +19,13 @@ switch.tpmini1:
 switch.wemo_switch_5ea:
   assumed_state: true
   friendly_name: Window Christmas Lights
+cover.shade_bedroom_east_level:
+  friendly_name: Bedroom East
+cover.shade_bedroom_west_level:
+  friendly_name: Bedroom West
+cover.shade_living_room_level:
+  friendly_name: Living Room
+cover.shade_office_east_level:
+  friendly_name: Office East
+cover.shade_office_west_level:
+  friendly_name: Office West

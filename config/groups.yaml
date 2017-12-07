@@ -34,6 +34,12 @@ office_lights:
     - light.office_hue
     - light.computer_lamp
 
+office_shades:
+  name: Office Shades
+  entities:
+    - cover.shade_office_west_level
+    - cover.shade_office_east_level
+
 christmas_lights:
   name: Christmas Lights
   entities:
@@ -46,13 +52,20 @@ office:
   control: hidden
   entities:
     - automation.auto_office_lights_on_after_dark
-    - binary_sensor.window_office_computer
+    - binary_sensor.window_office_west
     - climate.upstairs
     - group.office_lights
+    - group.office_shades
     - media.gpm_desktop_player
     - sensor.upstairs_thermostat_humidity
     - sensor.upstairs_thermostat_temperature
     - switch.bowser
+
+bedroom_shades:
+  name: Bedroom Shades
+  entities:
+    - cover.shade_bedroom_west_level
+    - cover.shade_bedroom_east_level
 
 bedroom:
   name: Bedroom
@@ -61,6 +74,7 @@ bedroom:
   entities:
     - automation.wake_up_for_work
     - climate.upstairs
+    - group.bedroom_shades
     - light.bedroom_lights
     - media_player.minitv
     - sensor.upstairs_thermostat_humidity
@@ -89,6 +103,7 @@ downstairs:
     - automation.periodic_fan_downstairs
     - binary_sensor.downstairs_thermostat_fan
     - climate.downstairs
+    - cover.shade_living_room_level
     - group.living_room
     - group.kitchen
     - light.downstairs_hub_lights
