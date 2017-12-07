@@ -110,8 +110,6 @@ downstairs:
     - light.kitchen_lights
     - light.living_room_lights
     - media_player.downstairs_home
-    - media_player.receiver
-    - media_player.shield
     - media_player.living_room_tv
     - sensor.downstairs_thermostat_humidity
     - sensor.downstairs_thermostat_temperature
