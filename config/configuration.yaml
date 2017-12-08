@@ -86,12 +86,12 @@ binary_sensor:
         device_class: motion
         entity_id:
           - sensor.motion_upstairs_alarm_level
-      window_office_computer:
-        value_template: '{{ states.sensor.window_office_computer_alarm_level.state == "255" }}'
-        friendly_name: 'Window Office Computer'
+      window_office_west:
+        value_template: '{{ states.sensor.window_office_west_alarm_level.state == "255" }}'
+        friendly_name: 'Window Office West'
         device_class: opening
         entity_id:
-          - sensor.window_office_computer_alarm_level
+          - sensor.window_office_west_alarm_level
       presence:
         value_template: '{{ states.device_tracker.pixel_sailfish.state == "home" }}'
         friendly_name: 'presence'
