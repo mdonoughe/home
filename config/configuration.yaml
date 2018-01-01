@@ -284,6 +284,9 @@ lutron_caseta:
   certfile: lutron.crt
   ca_certs: lutron-ca.crt
 
+recorder:
+  db_url: !secret db_url
+
 shell_command:
   sleep_bowser: !secret sleep_command
 

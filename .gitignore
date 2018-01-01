@@ -6,7 +6,6 @@
 /config/google_calendars.yaml
 /config/gpmpd.conf
 /config/home-assistant.log
-/config/home-assistant_v2.db
 /config/html5_push_registrations.conf
 /config/lutron.key
 /config/nest.conf
