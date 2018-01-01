@@ -176,6 +176,8 @@ media_player:
   - platform: cast
     host: 192.168.86.45
   - platform: cast
+    host: 192.168.86.86
+  - platform: cast
     host: 192.168.86.98
   - platform: gpmdp
     host: 192.168.86.34
