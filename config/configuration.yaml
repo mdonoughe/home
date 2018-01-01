@@ -192,6 +192,7 @@ media_player:
     customize:
       sources:
         - HDMI2
+        - HDMI3
         - HDMI4
   - platform: universal
     name: Living Room TV
