@@ -113,6 +113,10 @@ google:
   client_id: !secret calendar_id
   client_secret: !secret calendar_secret
 
+hue:
+  bridges:
+    - host: 192.168.86.46
+
 # Weather prediction
 sensor:
   - platform: darksky
@@ -257,8 +261,6 @@ notify:
     gcm_sender_id: !secret gcm_sender
 
 light:
-  - platform: hue
-    host: 192.168.86.46
   - platform: template
     lights:
       computer_lamp:
