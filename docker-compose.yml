@@ -16,6 +16,9 @@ services:
         max-file: "10"
     depends_on:
       - influx
+    labels:
+      - SERVICE_8123_NAME=home
+      - SERVICE_8123_TAGS=traefik.enable=true
 
   influx:
     image: influxdb:1.3-alpine
@@ -38,6 +41,9 @@ services:
       - "GF_AUTH_GOOGLE_SIGN_UP=false"
       - "GF_USERS_ALLOW_SIGN_UP=false"
       - "GF_AUTH_BASIC=false"
+    labels:
+      - SERVICE_NAME=stat
+      - SERVICE_TAGS=traefik.enable=true
 
 volumes:
   influxdb:
