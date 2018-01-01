@@ -176,14 +176,14 @@ media_player:
   - platform: cast
     host: 192.168.86.45
   - platform: cast
-    host: 192.168.86.52
+    host: 192.168.86.98
   - platform: gpmdp
     host: 192.168.86.34
   - platform: onkyo
-    host: 192.168.86.65
+    host: 192.168.86.102
     name: receiver
   - platform: webostv
-    host: 192.168.86.90
+    host: 192.168.86.101
     name: Living Room Display
     turn_on_action:
       service: media_player.turn_on
