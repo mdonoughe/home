@@ -40,12 +40,6 @@ office_shades:
     - cover.shade_office_west_level
     - cover.shade_office_east_level
 
-christmas_lights:
-  name: Christmas Lights
-  entities:
-    - switch.tpmini1
-    - switch.wemo_switch_5ea
-
 office:
   name: Office
   view: yes
@@ -120,9 +114,6 @@ outside:
   view: yes
   control: hidden
   entities:
-    - automation.christmas_on
-    - automation.christmas_off
-    - group.christmas_lights
     - sensor.dark_sky_apparent_temperature
     - sensor.dark_sky_cloud_coverage
     - sensor.dark_sky_apparent_high_temperature
