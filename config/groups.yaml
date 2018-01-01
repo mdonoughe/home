@@ -50,7 +50,7 @@ office:
     - climate.upstairs
     - group.office_lights
     - group.office_shades
-    - media.gpm_desktop_player
+    - media_player.gpm_desktop_player
     - sensor.upstairs_thermostat_humidity
     - sensor.upstairs_thermostat_temperature
     - switch.bowser
@@ -84,7 +84,7 @@ upstairs:
     - binary_sensor.upstairs_thermostat_fan
     - climate.upstairs
     - light.upstairs_hub_lights
-    - media.upstairs_home
+    - media_player.upstairs_home
     - sensor.upstairs_thermostat_humidity
     - sensor.upstairs_thermostat_temperature
     - timer.upstairs_light_timer
