@@ -10,7 +10,7 @@ metadata:
 spec:
   releaseName: nginx-ingress
   chart:
-    git: ssh://git@github.com/mdonoughe/charts
+    git: https://github.com/mdonoughe/charts
     ref: master
     path: stable/home-assistant
   values:
