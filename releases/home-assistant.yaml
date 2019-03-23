@@ -35,4 +35,4 @@ spec:
       existingClaim: home-assistant
     nodeSelector:
       network: internal
-    #zwave: /dev/zwave
+    zwave: /dev/zwave
