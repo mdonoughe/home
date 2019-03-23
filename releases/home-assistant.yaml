@@ -8,7 +8,7 @@ metadata:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.chart-image: semver:~0.89
 spec:
-  releaseName: nginx-ingress
+  releaseName: home-assistant
   chart:
     git: https://github.com/mdonoughe/charts
     ref: master
