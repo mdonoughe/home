@@ -30,6 +30,9 @@ spec:
         - hosts:
           - home.okayserver.gq
           secretName: home-assistant-tls
+    persistence:
+      enabled: true
+      existingClaim: home-assistant
     nodeSelector:
       network: internal
     #zwave: /dev/zwave

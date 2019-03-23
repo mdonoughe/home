@@ -1,0 +1,220 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-0
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/0
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-1
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-2
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/2
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-3
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/3
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-4
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/4
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-5
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/5
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-6
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/6
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-7
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/7
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-8
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/8
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tiny-9
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /mnt/disks/9
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - tiny
