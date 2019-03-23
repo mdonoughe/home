@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "dummy-site.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    app: {{ template "dummy-site.name" . }}
+data:
+{{ (.Files.Glob "data/*").AsConfig | indent 2 }}

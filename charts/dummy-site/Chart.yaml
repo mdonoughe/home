@@ -1,0 +1,17 @@
+apiVersion: v1
+name: dummy-site
+description: landing page for my domain
+version: 0.1.0
+kubeVersion: ">=1.2.0"
+keywords:
+  - http
+  - nginx
+  - www
+  - web
+  - placeholder
+home: https://github.com/mdonoughe/dummy-site
+sources:
+  - https://hub.docker.com/_/nginx/
+maintainers:
+  - name: mdonoughe
+    email: mdonoughe@gmail.com

@@ -1,0 +1,35 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.chart-image: semver:~0.89
+spec:
+  releaseName: nginx-ingress
+  chart:
+    git: ssh://git@github.com/mdonoughe/charts
+    ref: master
+    path: stable/home-assistant
+  values:
+    image:
+      repository: mdonoughe/home-assistant
+      tag: 0.89.2
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: 'true'
+        nginx.ingress.kubernetes.io/proxy-read-timeout: '3600'
+        nginx.ingress.kubernetes.io/proxy-send-timeout: '3600'
+      hosts:
+        - home.okayserver.gq
+      tls:
+        - hosts:
+          - home.okayserver.gq
+          secretName: home-assistant-tls
+    nodeSelector:
+      network: internal
+    #zwave: /dev/zwave
