@@ -28,10 +28,8 @@ spec:
       enabled: true
       useExisting: true
       name: influx
-  valuesFrom:
-  - secretKeyRef:
-      name: influx-secret
-      optional: false
+  valueFileSecrets:
+  - name: influx-secret
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

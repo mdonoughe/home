@@ -22,10 +22,8 @@ spec:
     persistence:
       enabled: true
       existingClaim: postgres
-  valuesFrom:
-  - secretKeyRef:
-      name: postgres-secret
-      optional: false
+  valueFileSecrets:
+  - name: postgres-secret
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
