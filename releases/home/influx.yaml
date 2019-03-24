@@ -29,7 +29,7 @@ spec:
       existingClaim: influx
   valuesFrom:
   - secretKeyRef:
-    name: influx-secret
+      name: influx-secret
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
