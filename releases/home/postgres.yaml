@@ -18,6 +18,7 @@ spec:
       repository: bitnami/postgresql
       tag: '10.7.0'
     postgresqlUsername: home-assistant
+    postgresqlDatabase: home-assistant
     persistence:
       enabled: true
       existingClaim: postgres
