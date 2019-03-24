@@ -36,6 +36,8 @@ spec:
     nodeSelector:
       network: internal
     zwave: /dev/zwave
+    securityContext:
+      privileged: true
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
