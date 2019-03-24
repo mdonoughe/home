@@ -24,6 +24,9 @@ spec:
       enabled: true
       user:
         username: home-assistant
+    env:
+    - name: INFLUXDB_DB
+      value: home_assistant
     persistence:
       enabled: true
       useExisting: true
