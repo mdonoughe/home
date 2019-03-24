@@ -26,7 +26,8 @@ spec:
         username: home-assistant
     persistence:
       enabled: true
-      existingClaim: influx
+      useExisting: true
+      name: influx
   valuesFrom:
   - secretKeyRef:
       name: influx-secret
