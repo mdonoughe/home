@@ -6,7 +6,7 @@ metadata:
   namespace: home
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.chart-image: semver:~0.89
+    flux.weave.works/tag.chart-image: semver:~0.90
 spec:
   releaseName: home-assistant
   chart:
@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: mdonoughe/home-assistant
-      tag: '0.89.2'
+      tag: '0.90.1'
     ingress:
       enabled: true
       annotations:
