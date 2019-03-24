@@ -23,7 +23,7 @@ spec:
     setDefaultUser:
       enabled: true
       user:
-        username: home-assistant
+        username: home_assistant
     env:
     - name: INFLUXDB_DB
       value: home_assistant
