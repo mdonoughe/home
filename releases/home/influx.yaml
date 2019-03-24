@@ -31,6 +31,7 @@ spec:
   valuesFrom:
   - secretKeyRef:
       name: influx-secret
+      optional: false
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

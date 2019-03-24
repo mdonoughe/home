@@ -25,6 +25,7 @@ spec:
   valuesFrom:
   - secretKeyRef:
       name: postgres-secret
+      optional: false
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
