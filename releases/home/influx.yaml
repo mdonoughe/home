@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: influxdb
-      tag: '1.7.3'
+      tag: '1.7.4'
     config:
       http:
         auth_enabled: true
@@ -39,7 +39,7 @@ metadata:
 spec:
   storageClassName: local-storage
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 8Gi
@@ -47,7 +47,7 @@ spec:
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
+  creationTimestamp:
   name: influx-secret
   namespace: home
 spec:
