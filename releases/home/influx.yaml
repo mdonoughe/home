@@ -1,0 +1,55 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: influx
+  namespace: home
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.chart-image: semver:~1.7
+spec:
+  releaseName: home-influx
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: influxdb
+    version: '1.1.3'
+  values:
+    image:
+      repository: influxdb
+      tag: '1.7.3'
+    config:
+      http:
+        auth_enabled: true
+    setDefaultUser:
+      enabled: true
+      user:
+        username: home-assistant
+    persistence:
+      enabled: true
+      existingClaim: influx
+  valuesFrom:
+  - secretKeyRef:
+    name: influx-secret
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influx
+  namespace: home
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: influx-secret
+  namespace: home
+spec:
+  encryptedData:
+    values.yaml: AgCoa/mNRNsdxIrzI7rfyd2WPHr4Yufok5INcaADtC0bC2Fa1cyJsxNInmjbWjwe6iKjHehAoARt1/LY3WoAiZzSHvJwdHNY7/+6NP2+Ojy9tZgd1FtGI+1xnFxz0LODwfqAX6k4YuOJcXj6LtifM6rqN36tRd/bw/YUghvRgTwTeyPT/rFwVI9h43nVhgsjNCsFNBH6iGV16LhJeK5ake6U89z96LkMxom18aaGe2xdXjPxrw8oDAJ2pGEJ/A1DqnAIPNRALXEkEMQRxVGgyEzYrF0lsul0ztHNlxJmAMIuBjO26qqX1tj/KCJy571bT3TP8JK4V4PXuqR2Gjc5f4kxtxRP5vkVEKQEjAZ5DpIBK6rSpSZJh2m3uv7OaZysW1GUBCE3q1unEUSwRI+m1IldJxLJYHz5WAgZHg8Mb75/TJiclL6CqvOZUoVAXJZi6KnD7/cS6pWNdbxU2XuFeivHxlLVUJ3T1mX6oPvkMIasVVH5FSBwgVn3f9JtRarQsGPhplW849YJ0VJxp8EFADeystg5mLtTEXSVOwtCak9/tG8SMs3nF357W7eNySWW/hNoc7tSYIYm5c1O79BxufWL6Cv0NHHMgyNSUS//X9jaE3ZVJw28aaSGWW6z0qcouLDLJBgG5Pwkn8+YYeBrI2Xbm+D4W5lnsNexMlTCDybhJNECekItw5nezVgewt80GrGuB0xtrFGbyHy1CYhYVkDCi56coB53+wqsglQjiG147en8iC9ZdREMWauDD0fv5E4kkt078dq7spjfbjVLovOSqQ2Lym9JKHazow==

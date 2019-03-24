@@ -1,0 +1,49 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: postgres
+  namespace: home
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.chart-image: semver:~10.7
+spec:
+  releaseName: home-postgres
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: postgresql
+    version: '10.7.0'
+  values:
+    image:
+      repository: bitnami/postgresql
+      tag: '10.7.0'
+    postgresqlUsername: home-assistant
+    persistence:
+      enabled: true
+      existingClaim: postgres
+  valuesFrom:
+  - secretKeyRef:
+    name: postgres-secret
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres
+  namespace: home
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: postgres-secret
+  namespace: home
+spec:
+  encryptedData:
+    values.yaml: AgC1seuLGnwJggyHRlQS3I1J3TKi/drz3sWeOknKLuwUaoJLiCvJdJCZGWyErCPL06BB9wECfopPCZ9T0c05sXP8Qb/l96f4d3RKwRtUq3VV/WrpqhXm44OM2dDR+pYhnlC8eXTP6q2N4sz8rHqV4EgsGO+zO4K9V8itssISfdSeFXkefAs74q/6S0jzVZ1+sl7InTD/1Co5SuJSg3dcsyL2D97AQBRCBe/D97PRtWD+Xvj1kB8nDVlj8OLkmWxjrqzA6q75I/KDZu5W6NGOB93+0/ei5IqZkK3AAhKhS8d5gIzSSWyxWQP5eVZRmlpdl7VzhMdiDvtnUtUxbKgIWAQef++hHvA7MAYQ+RuwW+bTrC+07GUqQSt175rHIZ8ijB2xFQGGaUBsfdYEsFl/tWGoDy1fbKHkwiF92B2x71DglOGWM7yCtpDdNhbGsW56Ec8nuutihhhExv6rSgolXDw285ACr0y2W+Sn7jgWzVIZWw0RF13sGvuzxOiI++UV/UnM4sIKswWvYK0eCwqwIi75B/5xQM3mzrwD6v/8qHJvDr1XQshbYN3C03JFA4fwNIdIKvpWQED0yYlbIjznOMw8KDJx+bb5ZI5DGs3+0NS8AVbMvRV5MbsH5oG52Tsg0NTV6jyRaghTUE/wLW1Mo4XuoLINbsDFCfI5CrzfH+oS16t2Qt/igs1gbRPADYRL5He7rdkHC/beutHDhsppyEI1yjE9goqj6/ur9WqzEZDys33ZDupjjZ0u2Pgqvwp2jQ9wwF1uKYg=

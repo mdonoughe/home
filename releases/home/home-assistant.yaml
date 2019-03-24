@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: mdonoughe/home-assistant
-      tag: 0.89.2
+      tag: '0.89.2'
     ingress:
       enabled: true
       annotations:
@@ -36,3 +36,16 @@ spec:
     nodeSelector:
       network: internal
     zwave: /dev/zwave
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: home-assistant
+  namespace: home
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
