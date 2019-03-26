@@ -16,17 +16,17 @@ spec:
   values:
     image:
       repository: nginx
-      tag: 1.15.9
+      tag: 1.15.10
     ingress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx
         kubernetes.io/tls-acme: 'true'
       hosts:
-        - okayserver.gq
+      - okayserver.gq
       tls:
-        - hosts:
-          - okayserver.gq
-          secretName: dummy-site-tls
+      - hosts:
+        - okayserver.gq
+        secretName: dummy-site-tls
     nodeSelector:
       kubernetes.io/hostname: okayserver.gq
