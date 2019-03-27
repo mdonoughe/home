@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: influxdb
-      tag: '1.7.4'
+      tag: '1.7.5'
     config:
       http:
         auth_enabled: true
