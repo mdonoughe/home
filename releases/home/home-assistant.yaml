@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: mdonoughe/home-assistant
-      tag: '0.90.1'
+      tag: '0.90.2'
     ingress:
       enabled: true
       annotations:
@@ -25,11 +25,11 @@ spec:
         nginx.ingress.kubernetes.io/proxy-read-timeout: '3600'
         nginx.ingress.kubernetes.io/proxy-send-timeout: '3600'
       hosts:
-        - home.okayserver.gq
+      - home.okayserver.gq
       tls:
-        - hosts:
-          - home.okayserver.gq
-          secretName: home-assistant-tls
+      - hosts:
+        - home.okayserver.gq
+        secretName: home-assistant-tls
     persistence:
       enabled: true
       existingClaim: home-assistant
@@ -47,7 +47,7 @@ metadata:
 spec:
   storageClassName: local-storage
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 8Gi
