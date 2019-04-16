@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: nginx
-      tag: 1.15.11
+      tag: 1.15.12
     ingress:
       enabled: true
       annotations:
