@@ -35,9 +35,10 @@ spec:
       existingClaim: home-assistant
     nodeSelector:
       network: internal
-    zwave: /dev/zwave
-    securityContext:
-      privileged: true
+    devices:
+    - zwave
+    usePodSecurityContext: true
+    privileged: true
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
