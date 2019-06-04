@@ -37,6 +37,7 @@ spec:
       network: internal
     devices:
     - zwave
+    dbus: /run/dbus/system_bus_socket
     usePodSecurityContext: true
     privileged: true
 ---
