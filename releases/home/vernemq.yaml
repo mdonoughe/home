@@ -1,0 +1,44 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: vernemq
+  namespace: home
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.chart-image: glob:1.8.*-alpine
+spec:
+  releaseName: vernemq
+  chart:
+    repository: https://vernemq.github.io/docker-vernemq/
+    name: vernemq
+    version: '1.3.0'
+  values:
+    image:
+      repository: erlio/docker-vernemq
+      tag: 1.8.0-alpine
+    service:
+      type: NodePort
+      mqtt:
+        enabled: true
+        nodePort: 31817
+      mqtts:
+        enabled: true
+        nodePort: 30860
+      ws:
+        enabled: true
+        nodePort: 30604
+  valuesFrom:
+  - secretKeyRef:
+      name: verne-users
+      key: users.yaml
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: verne-users
+  namespace: home
+spec:
+  encryptedData:
+    users.yaml: AgASXZ1gnMM1TaOutAqft3iXv7EY/wEk48rsdn1Y3cXxDDTrVa1RUGWXwY7zErAt2smV7Ior2delZMa19ZQ5eO9gcJlsFz0VGewnSzpr+bpheqCX0n2LtMuDVG2kwz2qrmr0OVIu7d9lKycVfbnXDqZxrMIc8Y3DMMfHJzznoNov4BhIUUi3AxE0rbRGOOTEMFcd8fLfLnaKrtKkwgmfKa4v+lPv1IVdMWj+z1TudCZl+XaqsRk2ev4PjpXYPrg29V17RWH5t5BC5gC1g5wxbA+Y500Uqq7A8SORxHSeRv/VoJsTtVEfnRl/EK8OSV+Ljkg29ofPl3FijJvua/46I2+Jc8f2cbAz4rPf12zbhmNNat0z+8s37kPTAVARq8HUe5MBxKX8ogKPN8bhVeoWyD2hP/TGjwIRibu/tL4eBpIY7LGALMySYrUA9HISMVDj7aWhMYg74uWI52gfEXiXpSGDg+XlxtOIhTrF1xMsWXcvT9O9JV+xxm5njwNTc1+oHe5cYoaeTkJ27HZWm98TcIXd2WCceczqjs9Q09p//23YoyP0uaUMf4+kvuNpTciFGDzCwqMFp1HiUxLapi51HE89PuegG3ep2QYn8C3rrLEkICDao56Ey5XVo3ZuQB7RYoOr+SV5PFlCUJYhC15TwpBpPoyLuLsneD3ZkefHFu6q9cAMqmjc/HzefA9JaeUWgvAXIl+LLN9ob1JicfDDXmcv5vmYhtW2Qu+DvKqPpfE7M45HQQO1b5aJAzUhi5dT8wdpaUgW4XH6tHtQigm00yzTfQJJm0zNvyBoGyO4nWbxJ3FC/5Gm+WtZ5S1RdK1X/kbzl3GCWGNqAARqh2kM97wcCJo3uq4RwofeCKFac6rLWWvum6eBnRQnGTCabiiLjnNYgzNzOY/OEQH80YkUKBYw0vj5CBFa0122A+XL

@@ -1,0 +1,37 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: plantgateway-config
+  namespace: home
+spec:
+  encryptedData:
+    plantgw.yaml: AgB3e6MKGmAsUT2wEh9m/DQejukCRpNIbPbMe0AT0Z8LzvSSgD/6QDT++UdFfL0mGMm7MtLPbu0x3RGrM3apKbfCK2GYXPo4mHmMnjfwuSGcHKHvrxDPcXVPRDGNZy5UOtZDRhVM+0ixCq1CNVxbafCl7jloVfPmQLW/fkZ1eWfRyLQD6t64vR67PZwleH+t5zIaXm+nfpxkIKo3i7vO2FQKKx9RrU+fG4CfiLXWNmcx+NIC3XF1xVmXXNI5MqbJ0jeLla/d+ASR7T63MKq83PTed9+7XHTI2nDnDfF7uT7atUAP+ywNPxpMtrJczxNwfKExhtbdgFY19poeE1+CdTQ+Axu5nGs/8NsvocJsBqi8n4JboAnTNmPO0SaycIic1p7/7UGdC4KAniVqT6DWoUV0lrVLxJfu9e3Wb6itgavEh4VNmwi/KNtj5eTCha+D3wDd+79Umje4rwbGFanEMaE568CvXIraGZ6XvVw7ZaokdHTjXCvYHRi9wECNq+xhOXHHD3qkLVYLG9rVDeP8ug63AK94T2T9etP9mkhzfmMTgoJZ/Sda+VAxRo9t0w1qQoaGKLe3dlUtqYHctvVDGXMsdC8JqkhtfIXCR940Z68TMgyOalqkBGxE/FyoQAlsaUxZK04kkplyb+sUtP7FAv7EfqAhLo6l3mftSaRycdn0d6wXDzGi7QN++bwM0nrggm+IAzekJekCXi6reeqmR9wdKy2sFNipyBYgx2oi4g/cFHZO0MMM68Bo0PoX6r5p0ghGHo0ruByZBNk5cM45wptnHxzWcrM+Hupf7m3a/53+35vRDouwQJ501M4G9I9Pn2jGuCv0X2fFnm0/dvcV8uW4TFvDxkSCozgRudxPtZzvxnWNcAhB0JT4uHsfg5RSaDuITfnEHLUiKHcIpogn+og+dmb7EnK97Vqy4/ChYYuUOJ04Pjf7pytaROVojA+d6cIb7fW37ZYxq6NaHsU6k+sTLzufeGJ14Eh0FlHlwbzuGOWOcmxIpoykVryeYp+4ykz8yMkjqmW1j/T7FN3B
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: plantgateway
+  namespace: home
+spec:
+  schedule: '@hourly'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          hostNetwork: true
+          dnsPolicy: ClusterFirstWithHostNet
+          containers:
+          - name: plantgateway
+            image: lolgast/plantgateway
+            command: ["/usr/local/bin/plantgateway"]
+            volumeMounts:
+            - name: config
+              mountPath: /config
+              readOnly: true
+          restartPolicy: OnFailure
+          volumes:
+          - name: config
+            secret:
+              secretName: plantgateway-config
