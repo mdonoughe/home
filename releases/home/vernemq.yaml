@@ -18,16 +18,8 @@ spec:
       repository: erlio/docker-vernemq
       tag: 1.8.0-alpine
     service:
-      type: NodePort
       mqtt:
         enabled: true
-        nodePort: 31817
-      mqtts:
-        enabled: true
-        nodePort: 30860
-      ws:
-        enabled: true
-        nodePort: 30604
   valuesFrom:
   - secretKeyRef:
       name: verne-users
@@ -42,3 +34,27 @@ metadata:
 spec:
   encryptedData:
     users.yaml: AgB3UUBX2QD0id4ETGpBcC2smugp/0kyEuf1EYpGcaLFugSb0hxB/Mu2a/7QBO9s41T9yvOVxZkNa7Xgf22hhfYKt9B1vQp9daYbvIRmU4EAWZLforOg1d5HOagvvVSsIUjAVocGQY0L5cnElgUe2Kw4BDgcmUVNeB7UcVaqIttsyUWiWFOv6hVWcoOwlBH4eAHnoTZaCuLKEOXvQzFVLEU2T4upLMzPgQfQJ1AOgG1NITrBvYmvtKe5A3yqpMnhJbBAsM51n5O5zXCj7XFe11rDTB/iotUz8YNQkdacqdTJfhp95foSnrkZVx7Rn+tCHNzFMQ7AqLPMavWsmGhbn7asRwM8yC9ZYxWVWAX2MGfenSSTTFJqVRY8O9zqsofAzjfK42z+YI74zrlpfMFCel8dw8XRfjKpVFXZFWs5/vIcLa37Nt9FOUwma3kAEMvpDSnD1Jsx/aDFOyF4rGWglC8pL8a36CWuDMlLyBskr/ZtrFjRX0yIiT157MDAC3wJ9hiHIMqJrDFG8rOpd2XLBwfhTtpqvNp5TM1zM7qvPHSqBC4MTkRNVXc7u/+/2zGAgTUmnYq4qs8ybDj8QGXEHmjkrh27WdGX5hTIlYHx8oqlIOvPVfBa2zJrn0b31TWzv1GD8B2ZtdQUVWkJn9DSz1bWgymgT70SDXCez3cV2BjTlV/E9KwmpTQbZME74kvDfW02U82kxRv/aSuwUEBQyibdyIAO2DRN/NFU74T9jpkzEbh2mdmeUwC3kC1VSkmNrbyPBngpb73CVRERw0YpbPNtgutlgGUMCsGyfYrwKwzkcTWLXMcejD+JAo7GvRohsKwbU0KkqIikGLG6d/4P1UAOjL5Gu5tTTB/A0Hg7reBk27jcddSoN5BjrmnwITsmTMUcVOKB9rkNURxznHEQEDVAiQmjvoNzcudtsIPuPffwSaGaM7KPljtComDWF8NtIrvfJbyAWhm+mg4r7yfJ9B+cU7p9LVb8RZoQTLxcIpNa62FpfT5x7KdIFUCipA+D9BlY4LBJDVgn
+---
+apiVersion: voyager.appscode.com/v1beta1
+kind: Ingress
+metadata:
+  namespace: home
+  name: vernemq
+  labels:
+    app.kubernetes.io/instance: vernemq
+    app.kubernetes.io/name: vernemq
+  annotations:
+    kubernetes.io/ingress.class: voyager
+    ingress.appscode.com/type: HostPort
+spec:
+  rules:
+  - host: home.okayserver.gq
+    tcp:
+      port: "8883"
+      backend:
+        serviceName: vernemq
+        servicePort: "1883"
+  tls:
+  - hosts:
+    - home.okayserver.gq
+    secretName: home-assistant-tls
