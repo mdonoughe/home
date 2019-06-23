@@ -28,5 +28,3 @@ spec:
       - hosts:
         - okayserver.gq
         secretName: dummy-site-tls
-    nodeSelector:
-      kubernetes.io/hostname: okayserver.gq
