@@ -1,0 +1,50 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: rtlamr
+  namespace: home
+spec:
+  encryptedData:
+    FILTERID: AgB73r90Se9NOB26zupuIx+xYUxOR2d+0dBdriKd7yvps/2Mkwel+9Y7GbxnB1dgIhEWXjy5G2u7MeqkZD14nEbnBnBaJA/4ILmidzuAyRDh3nE+zDSwr23btmQhmxOW5PMhhKXDXHBbyl04AElLxtKBPHhitGuURyYX0TVXsewrLnR9+cxzvsp9nGQqfDIUAu4YRK0Twl6BGOjjZb/Vn4Un0GRVTG6DCgHb9YXqsFtcScm4MwQvWiWtFHO0AG2af0tYKTPcJ8CUL3lr/yZDHeN5U3/r4Nh/BH0xl87NQNuTcIf1tjwyj9/C01ak7ghQhea0l34P7UMGivTlfh3BSKl6Mcaqfifn9+/Z4+L70jLmF06VJeqAuy7FOX77Ut0ZHOAEqz82kx7KvG+CQxy62mEC9AvKPWTFbQ1kxUBu4NLD/dCQ6gKqOXlyLtybYM4N5Cj7LE8UN7M4UqKnJgJYZdSKOe9jfP15aF6/aUstl+t9QqEUOqyjdHWYZRBYioSjxER4bBahpIo8CnuldEWO/Fk9S0ktG8sShy7TGZ1TbVIEFCRTaVv5ZTajH01d9BKTBdgcrwoDQdaAq/yJUqgQWbB6/o51pAF5x2qx7kV9QGJEFM5OkcrkQNpb5+2tFPim8T8muTo00kPnFWXqwMjWXANA9ksi8svC5pkPzOfd28r3RBmPjPs/Kxq/+idsgj+52bgfy1rx24zfWGIb
+    PASSWORD: AgA+HJh8zg/nxGVIDu+mIjESAXkD2Ar9Mf0JD14b68jLhMmx8qi5Z5tBccIcnw5IlJWwVFxvoLgZx3B6SItudwelMwMGiAwZAnG1gVp9hLYmBJM15779ceXIZgVczabKgATrRmOhP6O467tgQ4zVhz5MEZqttm74gXvybtRkH3NaMIWPQtIf8ufTlkGcX2FkiF5N90ho6LMfxJ4rtp+YHgl2jvlQHgp8tgPaTERogbeSNMy6gaWaJ9bKfMy6uQBIdXWWwTaK75CkIZZjPW9YFr6fu0GYhvgwAYljSqZWlUwfgqnLLPokRSuYwHJlNctQFx+HIDBXfKGWDAdiPUyKof0gzCk5cCkKlqJ9mpVnHO3PFfcokkkIwWafpsVhYQQmjWnSY3IEJJ5KjyQnY2/WT1mhJKLz4SBqJH/9SATkyWFzuxHQUTd+PjvKCPJ1vJF0wss7W3eJtGqu6X6xQG4laJnNL8Se0tVFVyB9whOqay50t1Kc+Ih+E1StX9M5T3JNcXXPnZAiK2gmDouCj2DASqKw/6KNUoNP2UNclK/Bh1bo86Ixz1ZtfOsxbWFjy5jxOKY6T59MdJga/Adz7iWUVgaAtWk+MnZGDejd+A0I0ud8Ywod9rgWDDl99G/GG75+K4S4mhLLMYKEXo/nlFVXzzbUJ94KojFci7D+cnT+2cbVpk5GunxvzoEmb7LgSNoptDeiZXYJ8rDbfjr0I1be0LYM+KlSj5GfG6aPHbag2TAGnA==
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: rtlamr
+  namespace: home
+spec:
+  schedule: '@hourly'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: rtlamr
+            image: mdonoughe/rtlamr-collect@sha256:adc9035bd47c9643b9e47837f30942b40ab9430afc89719d7b86d4c60f0c780c
+            env:
+            - name: COLLECT_INFLUXDB_HOSTNAME
+              value: http://home-influx-influxdb:8086/
+            - name: COLLECT_INFLUXDB_DATABASE
+              value: rtlamr
+            - name: COLLECT_INFLUXDB_USER
+              value: home_assistant
+            - name: COLLECT_INFLUXDB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: rtlamr
+                  key: PASSWORD
+            - name: RTLAMR_FILTERID
+              valueFrom:
+                secretKeyRef:
+                  name: rtlamr
+                  key: FILTERID
+            - name: RTLAMR_SINGLE
+              value: 'true'
+            - name: RTLAMR_SERVER
+              value: rtltcp:1234
+            - name: RTLAMR_MSGTYPE
+              value: scm+
+          restartPolicy: OnFailure

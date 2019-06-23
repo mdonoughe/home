@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: home
+  name: rtltcp
+  labels:
+    app: rtltcp
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: rtltcp
+  template:
+    metadata:
+      labels:
+        app: rtltcp
+    spec:
+      containers:
+      - name: rtltcp
+        image: bemasher/rtl-sdr@sha256:9cfda171ad595b47c850e997fcd04c95159c5b79f4f7590e0a031b52fd84e81c
+        args: [ "rtl_tcp", "-a", "0.0.0.0" ]
+        ports:
+        - name: http
+          containerPort: 1234
+          protocol: TCP
+        volumeMounts:
+          - mountPath: /dev/bus/usb/000/000
+            name: usb
+        securityContext:
+          privileged: true
+      volumes:
+      - name: usb
+        hostPath:
+          path: /dev/sdr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: home
+  name: rtltcp
+  labels:
+    app: rtltcp
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app: rtltcp
+  ports:
+  - name: rtltcp
+    port: 1234
+    protocol: TCP
+    targetPort: 1234
