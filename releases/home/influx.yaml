@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: influxdb
-      tag: '1.7.6'
+      tag: '1.7.7'
     config:
       http:
         auth_enabled: true
@@ -27,9 +27,9 @@ spec:
     initScripts:
       enabled: true
       scripts:
-        init.iql: |+
+        init.iql: |
           CREATE DATABASE home_assistant
-        rtlamr.iql: |+
+        rtlamr.iql: |
           -- Data aggregation for rtlamr.
           -- Copyright (C) 2017 Douglas Hall
           --
