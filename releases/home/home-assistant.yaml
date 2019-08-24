@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: mdonoughe/home-assistant
-      tag: '0.97'
+      tag: '0.97.2'
     ingress:
       enabled: true
       annotations:
