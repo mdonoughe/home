@@ -1,23 +1,23 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: voyager
   namespace: system
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.voyager: semver:~10.0
-    flux.weave.works/tag.haproxy: glob:1.9.6-10.0.*-alpine
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.voyager: semver:~v11.0
+    fluxcd.io/tag.haproxy: glob:1.9.6-v11.0.*-alpine
 spec:
   releaseName: voyager
   chart:
     repository: https://charts.appscode.com/stable/
     name: voyager
-    version: '10.0.0'
+    version: v11.0.1
   values:
     voyager:
-      tag: '10.0.0'
+      tag: v11.0.1
     haproxy:
-      tag: 1.9.6-10.0.0-alpine
+      tag: 1.9.6-v11.0.1-alpine
     cloudProvider: baremetal
     ingressClass: voyager
