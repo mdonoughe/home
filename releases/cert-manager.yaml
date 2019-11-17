@@ -30,4 +30,3 @@ spec:
     ingressShim:
       defaultIssuerName: letsencrypt-prod
       defaultIssuerKind: ClusterIssuer
-      defaultACMEChallengeType: http01
