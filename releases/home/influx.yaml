@@ -74,23 +74,11 @@ spec:
           END;
     persistence:
       enabled: true
-      useExisting: true
-      name: influx
+      accessMode: ReadWriteOnce
+      size: 8Gi
+      storageClass: local-storage
   valueFileSecrets:
     - name: influx-secret
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: influx
-  namespace: home
-spec:
-  storageClassName: local-storage
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 8Gi
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
