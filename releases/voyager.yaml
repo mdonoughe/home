@@ -13,7 +13,7 @@ spec:
   chart:
     repository: https://charts.appscode.com/stable/
     name: voyager
-    version: v11.0.1
+    version: 10.0.0
   values:
     voyager:
       tag: v11.0.1
