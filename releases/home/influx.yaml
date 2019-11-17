@@ -27,9 +27,10 @@ spec:
     initScripts:
       enabled: true
       scripts:
-        init.iql: |
+        init.iql: |+
+          -- Home Assistant history database
           CREATE DATABASE home_assistant
-        rtlamr.iql: |
+        rtlamr.iql: |+
           -- Data aggregation for rtlamr.
           -- Copyright (C) 2017 Douglas Hall
           --
@@ -60,7 +61,7 @@ spec:
             FROM "autogen"."rtlamr"
             WHERE "endpoint_type" = '7'
             GROUP BY time(1h), *
-            TZ('America/New_York')
+            TZ('Etc/UTC')
           END;
 
           CREATE CONTINUOUS QUERY "1d_power" ON "rtlamr"
@@ -70,7 +71,7 @@ spec:
             INTO "rtlamr"."5y_1d"."power"
             FROM "rtlamr"."30d_1h"."power"
             GROUP BY time(1d), *
-            TZ('America/New_York')
+            TZ('Etc/UTC')
           END;
     persistence:
       enabled: true
