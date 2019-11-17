@@ -4,5 +4,4 @@ kind: Namespace
 metadata:
   name: cert-manager
   labels:
-    access: kube-system
-    certmanager.k8s.io/disable-validation: 'true'
+    certmanager.io/disable-validation: "true"
