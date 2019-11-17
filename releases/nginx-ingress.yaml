@@ -1,27 +1,27 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: nginx-ingress
   namespace: system
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.controller: semver:~0.23
-    flux.weave.works/tag.defaultBackend: semver:~1.4
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.controller: semver:~0.26.1
+    fluxcd.io/tag.defaultBackend: semver:~1.5
 spec:
   releaseName: nginx-ingress
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: nginx-ingress
-    version: '1.4.0'
+    version: "1.25.0"
   values:
     controller:
       image:
         repository: quay.io/kubernetes-ingress-controller/nginx-ingress-controller
-        tag: 0.23.0
+        tag: 0.26.1
       hostNetwork: true
       kind: DaemonSet
     defaultBackend:
       image:
-        repository: k8s.gcr.io/defaultbackend
-        version: '1.4'
+        repository: k8s.gcr.io/defaultbackend-amd64
+        version: "1.5"
