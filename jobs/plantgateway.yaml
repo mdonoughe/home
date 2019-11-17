@@ -7,7 +7,7 @@ metadata:
   namespace: home
 spec:
   encryptedData:
-    plantgw.yaml: AgB3e6MKGmAsUT2wEh9m/DQejukCRpNIbPbMe0AT0Z8LzvSSgD/6QDT++UdFfL0mGMm7MtLPbu0x3RGrM3apKbfCK2GYXPo4mHmMnjfwuSGcHKHvrxDPcXVPRDGNZy5UOtZDRhVM+0ixCq1CNVxbafCl7jloVfPmQLW/fkZ1eWfRyLQD6t64vR67PZwleH+t5zIaXm+nfpxkIKo3i7vO2FQKKx9RrU+fG4CfiLXWNmcx+NIC3XF1xVmXXNI5MqbJ0jeLla/d+ASR7T63MKq83PTed9+7XHTI2nDnDfF7uT7atUAP+ywNPxpMtrJczxNwfKExhtbdgFY19poeE1+CdTQ+Axu5nGs/8NsvocJsBqi8n4JboAnTNmPO0SaycIic1p7/7UGdC4KAniVqT6DWoUV0lrVLxJfu9e3Wb6itgavEh4VNmwi/KNtj5eTCha+D3wDd+79Umje4rwbGFanEMaE568CvXIraGZ6XvVw7ZaokdHTjXCvYHRi9wECNq+xhOXHHD3qkLVYLG9rVDeP8ug63AK94T2T9etP9mkhzfmMTgoJZ/Sda+VAxRo9t0w1qQoaGKLe3dlUtqYHctvVDGXMsdC8JqkhtfIXCR940Z68TMgyOalqkBGxE/FyoQAlsaUxZK04kkplyb+sUtP7FAv7EfqAhLo6l3mftSaRycdn0d6wXDzGi7QN++bwM0nrggm+IAzekJekCXi6reeqmR9wdKy2sFNipyBYgx2oi4g/cFHZO0MMM68Bo0PoX6r5p0ghGHo0ruByZBNk5cM45wptnHxzWcrM+Hupf7m3a/53+35vRDouwQJ501M4G9I9Pn2jGuCv0X2fFnm0/dvcV8uW4TFvDxkSCozgRudxPtZzvxnWNcAhB0JT4uHsfg5RSaDuITfnEHLUiKHcIpogn+og+dmb7EnK97Vqy4/ChYYuUOJ04Pjf7pytaROVojA+d6cIb7fW37ZYxq6NaHsU6k+sTLzufeGJ14Eh0FlHlwbzuGOWOcmxIpoykVryeYp+4ykz8yMkjqmW1j/T7FN3B
+    plantgw.yaml: AgAcaWUzG8tFx415yHGOy0JI55mknq+rPUmp7Qy+fCOih2SIdjMJROZkFk7RfAzX+6SIMhOOe9+osQE0VLUThMqx2j62Io8oRMfkMqDfCMg1Wr4I1SLf2O3BpHg441ujJOhOj8rtGKgO9pz/EC/+EUOrjqouegDMMxDAuR2qJ9tVZh5OgHVhr8Z8vZHKGygLL9/UQ+uzWk8TbK3OJF2dZbgC+AP7BwhhsVDydLrHeOY90Dtq0Hh2nsIBJeRVFgmf5EMh7XSWOEGhab9hPWP84u//j4Qd0ZvbDwAXjJMRmU+ljo3AmcYoI8hrdoD+sLMVhZQQ/nsM20DNP3MH807cVUc4M1NmFhorzCw53OcSS6jnropu78ulBk3cEJiWtj1CWzN+aQLAzs0jPPUqsFlwGaqKf82yt8ohlTSaN4TFPNOOjAB9szVDdIgfAbsINhEyGDLQcEvSeyz3ZdBepHuAiqEiQQgGHMJOgr9E+YdcedM7n4zbV0WLjkj4fnz+8R8YDZwgs9gUm2w/ZM8+gVNXBA7AmbFFs/jBY0DR8MaiEu3UWWvociOdAsQ7Vm4wBUIcKpMJtbO/Ro/sSlqB3DLw7R/W6bM/kzOeROarPuHRF2oupvDFxxLyIBjqj96SnJwDpX1YVj8PItAYh13SjQ7LRuAa3S08g8xNai9PJJzKVPuoXU4DdvBsI/4Tnxpiwj7xPmKO067m8OQeNsQ9ZRbTcxFo5x7Q4TF3Vl7rQfn7rKJ+t5snSn46pY3dFrcAb7cRyLMmUm1HQZbnOXcl4EQSAqaWbmSqyShtnp85PRySFedtW8t9tg2BWtcXBw2vBbb0QE3r2MohayFTZfjZfvbBMCIi0ASB0btSaYjCluxn8hxxRX1rnAlEALNyJ4Oo/tsg47b3RGHvmsMYsFAJSo+EMmbjnxhHsuYVM/S3oIs4XihDbg9FrZlxUIUpp/fMWl95DtP5OiKfsQUfu/qy8PYEZihT/Al/1VfED9kzPyNDDB0ICVMDJe23CZ0pCBksYLu9HUn2dJSHyt4+wsunvVVtCCpdtobHdRVrbhTIlYzlSC1DGJVvRmH5qfRHNQesVInmPrh9wn5QmYfsgev1gW/syBVju89hBOKP/WmLPyIPndnazd4m
 ---
 apiVersion: batch/v1beta1
 kind: CronJob
@@ -15,7 +15,7 @@ metadata:
   name: plantgateway
   namespace: home
 spec:
-  schedule: '@hourly'
+  schedule: "@hourly"
   jobTemplate:
     spec:
       template:
@@ -23,15 +23,15 @@ spec:
           hostNetwork: true
           dnsPolicy: ClusterFirstWithHostNet
           containers:
-          - name: plantgateway
-            image: lolgast/plantgateway
-            command: ["/usr/local/bin/plantgateway"]
-            volumeMounts:
-            - name: config
-              mountPath: /config
-              readOnly: true
+            - name: plantgateway
+              image: lolgast/plantgateway
+              command: ["/usr/local/bin/plantgateway"]
+              volumeMounts:
+                - name: config
+                  mountPath: /config
+                  readOnly: true
           restartPolicy: OnFailure
           volumes:
-          - name: config
-            secret:
-              secretName: plantgateway-config
+            - name: config
+              secret:
+                secretName: plantgateway-config
