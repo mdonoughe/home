@@ -10,7 +10,7 @@ metadata:
 spec:
   releaseName: dummy-site
   chart:
-    git: ssh://git@github.com/mdonoughe/home
+    git: https://github.com/mdonoughe/home.git
     ref: master
     path: charts/dummy-site
   values:
