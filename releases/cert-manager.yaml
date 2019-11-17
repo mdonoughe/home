@@ -1,32 +1,32 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: cert-manager
   namespace: cert-manager
   annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.chart-image: semver:~v0.7
-    flux.weave.works/tag.webhook: semver:~v0.7
-    flux.weave.works/tag.cainjector: semver:~v0.7
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.chart-image: semver:~v0.11.0
+    fluxcd.io/tag.webhook: semver:~v0.11.0
+    fluxcd.io/tag.cainjector: semver:~v0.11.0
 spec:
   releaseName: cert-manager
   chart:
     repository: https://charts.jetstack.io/
     name: cert-manager
-    version: v0.7.0
+    version: v0.11.0
   values:
     image:
-      repository: mdonoughe/cert-manager-controller
-      tag: '0.7.0'
+      repository: quay.io/jetstack/cert-manager-controller
+      tag: v0.11.0
     webhook:
       image:
         repository: quay.io/jetstack/cert-manager-webhook
-        tag: v0.7.0
+        tag: v0.11.0
     cainjector:
       image:
         repository: quay.io/jetstack/cert-manager-cainjector
-        tag: v0.7.0
+        tag: v0.11.0
     ingressShim:
       defaultIssuerName: letsencrypt-prod
       defaultIssuerKind: ClusterIssuer
