@@ -6,8 +6,8 @@ metadata:
   namespace: system
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.voyager: semver:~v11.0
-    fluxcd.io/tag.haproxy: glob:1.9.6-v11.0.*-alpine
+    fluxcd.io/tag.voyager: semver:~10.0
+    fluxcd.io/tag.haproxy: glob:1.9.6-10.0.*-alpine
 spec:
   releaseName: voyager
   chart:
@@ -16,8 +16,8 @@ spec:
     version: 10.0.0
   values:
     voyager:
-      tag: v11.0.1
+      tag: 10.0.0
     haproxy:
-      tag: 1.9.6-v11.0.1-alpine
+      tag: 1.9.6-10.0.0-alpine
     cloudProvider: baremetal
     ingressClass: voyager
