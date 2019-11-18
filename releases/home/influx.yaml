@@ -17,6 +17,9 @@ spec:
     image:
       repository: influxdb
       tag: "1.7.9"
+    startupProbe:
+      enabled: true
+      failureThreshold: 60
     config:
       http:
         auth_enabled: true
