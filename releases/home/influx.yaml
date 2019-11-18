@@ -17,48 +17,51 @@ spec:
     image:
       repository: influxdb
       tag: "1.7.9"
-    startupProbe:
-      enabled: true
-      failureThreshold: 60
+    env:
+      - name: INFLUXDB_ADMIN_USER
+        value: home_assistant
+      - name: INFLUXDB_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: influx-secret
+            key: password
     config:
       http:
         auth_enabled: true
-    setDefaultUser:
-      enabled: true
-      user:
-        username: home_assistant
     initScripts:
       enabled: true
       scripts:
         init.iql: |+
           CREATE DATABASE home_assistant
-        rtlamr.iql: |+
-          CREATE DATABASE rtlamr
+        rtlamr.sh: |+
+          influx -host 127.0.0.1 -port $INFLUXDB_INIT_PORT -username ${INFLUXDB_ADMIN_USER} -password ${INFLUXDB_ADMIN_PASSWORD} <<EOF
+            CREATE DATABASE rtlamr;
 
-          ALTER RETENTION POLICY "autogen" ON "rtlamr" DURATION 1w REPLICATION 1 SHARD DURATION 1h DEFAULT
-          CREATE RETENTION POLICY "30d_1h"  ON "rtlamr" DURATION 30d REPLICATION 1 SHARD DURATION 1d
-          CREATE RETENTION POLICY "5y_1d"  ON "rtlamr" DURATION 1825d REPLICATION 1 SHARD DURATION 30d
-        rtlamr-query-hour.iql: |+
-          CREATE CONTINUOUS QUERY "1h_power" ON "rtlamr"
-          RESAMPLE EVERY 1h FOR 2h
-          BEGIN
-            SELECT non_negative_difference(max("consumption")) AS "consumption"
-            INTO "30d_1h"."power"
-            FROM "autogen"."rtlamr"
-            WHERE "endpoint_type" = '7'
-            GROUP BY time(1h), *
-            TZ('Etc/UTC')
-          END;
-        rtlamr-query-day.iql: |+
-          CREATE CONTINUOUS QUERY "1d_power" ON "rtlamr"
-          RESAMPLE EVERY 1d FOR 2d
-          BEGIN
-            SELECT sum("consumption") AS "consumption"
-            INTO "rtlamr"."5y_1d"."power"
-            FROM "rtlamr"."30d_1h"."power"
-            GROUP BY time(1d), *
-            TZ('Etc/UTC')
-          END;
+            ALTER RETENTION POLICY "autogen" ON "rtlamr" DURATION 1w REPLICATION 1 SHARD DURATION 1h DEFAULT;
+            CREATE RETENTION POLICY "30d_1h"  ON "rtlamr" DURATION 30d REPLICATION 1 SHARD DURATION 1d;
+            CREATE RETENTION POLICY "5y_1d"  ON "rtlamr" DURATION 1825d REPLICATION 1 SHARD DURATION 30d;
+
+            CREATE CONTINUOUS QUERY "1h_power" ON "rtlamr"
+            RESAMPLE EVERY 1h FOR 2h
+            BEGIN
+              SELECT non_negative_difference(max("consumption")) AS "consumption"
+              INTO "30d_1h"."power"
+              FROM "autogen"."rtlamr"
+              WHERE "endpoint_type" = '7'
+              GROUP BY time(1h), *
+              TZ('Etc/UTC')
+            END;
+
+            CREATE CONTINUOUS QUERY "1d_power" ON "rtlamr"
+            RESAMPLE EVERY 1d FOR 2d
+            BEGIN
+              SELECT sum("consumption") AS "consumption"
+              INTO "rtlamr"."5y_1d"."power"
+              FROM "rtlamr"."30d_1h"."power"
+              GROUP BY time(1d), *
+              TZ('Etc/UTC')
+            END;
+          EOF
     persistence:
       enabled: true
       accessMode: ReadWriteOnce
@@ -70,8 +73,9 @@ spec:
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
+  creationTimestamp: null
   name: influx-secret
   namespace: home
 spec:
   encryptedData:
-    values.yaml: AgA9ZzMN0NzyZuCdtf3x2IZR9J4vo+IULuRAdMUiEDFbAy7DaUZynWlw/2uPn/5cg1thOzjPopa9wmB3+QcPePpzpTztrIf0Gae4dKpmIgNNywUhj1PLGDLeJNxY9nbj5EDwRnSrFUNQleF7oW8aa35rxPBop+iVCRuKAJHcRNbab0NTRHYCP3d/3XZT0rUrrUDpMXJW2ZdvCB3ds5er+MHDMNDGkNovDHuwAo36hjHm5iA+alKHdZxA1qIPm2VrZdzhJtwt+3TC94TIumkucUVQSB9AOU8U6pDt6bSYTceliYNdEHF6zABB3Gsu4oVEdbQcJd38NEPWf2Zp0xaYwu4crFgVTeLP1vHKY8f1RSxZbTTliqknMUgOYgT+rXVFeYJobdrdbtarbk6sLcAqyjb3GYwQo73T+EIE9oH4BWDOTaOrgEiwe6K3WkL4Jdb2hoWL70ZeBem1+EpgdLv7k12wFrO4+ComtFiY69MHY0OCKJsKxsZ9K9L8RXaYdkeI3PMkhkYPSkSVYT8wzPvjfnEXpntnqwXrwtm65jeD2Qfx6fDekSqNkYpk8cExaMMKJz+DZ/joDTd8g0zNpG601kBITZJDt/OUNf/BSGwZEgKgZfQ9HWqvi8u6T6/oNSmWrWaAHNzKjYbGLh/XkuZfMQaN3WG8H0nohk0UR/F3CXdg3T97qI/P8S7rMLPVl5gKeOsYTkoFaG9wZyn9/551Qlf9dJxilqBowrYfGVwCzdasPFECGWjTV/r2BNiQB8nyIT9odoRHEBeL7ExS2bkEIXBqAoxMM706+9Z3Kg==
+    password: AgAWa1JmqIpgJGf6GFHlsVEWmgORMvqa3f0sYsvrXYvY83Qe0s0JhofOS+XQB53G8Ew/z/uQrG9d3B/gfo1pNxCn/UM4JRKgVyb/ho4+QTAXOk8uUlBUP/MVRkRrpN5TbHth49WLIUHM0ZPC6nf11gEuWyv6Y8mOaajtZEFDlGt63md2ASJ3gNI54MqA30H2DW3q1gZlOD2WGzx/lQ9L49Nmg+FBmh+mdpyWTbEGMcdfVYm/xUEt/Y8Yp7w+1PQCn7YFLsZOO7VB5jaQAfSmcZIheOP04FhUTV883TBgh+uTdJh2ehj8Myizbok695og0Kkex+8aHtBDnyG9xvEeyVpkAt8RIPEi+tPqh+uw1MoVdGwt8R/YOiA8RY/RShAThJ7ga7kgxjrXLGNbXtlIlPe+utHMnZJJvZ7yK166ckQGgaxs1AKB7WThg2bO9QSNjud+3aoheOBmwLBWrjpJ58QgdsZA0tYhOi1eX66B7Mdi0HajkdfTJv1jUbN6YygVXOR2DKLWJwmmjXEw8JVOrhRVJz+E3geq7lWFg89jrV5lf1yVEftvzHdwunrzKjhs+zXGDpQ+odc1TtU/JDke15G/Ym3bv1sa7qGKhMLPOwK0lDKdyTrPkbIWQtaOjcdM8k3T1/l0ACyqp68/Vt4j28fntfcbuI2FSfcpRKBCaKiwjVvfGbcllXmtUsZ1ybO6grpqTohK4wInys0JGe1k0d2hL8vT9ORC2yTAbU5UHE5btQ==
