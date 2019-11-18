@@ -1,12 +1,12 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: home-assistant
   namespace: home
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.chart-image: semver:~0.97
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.chart-image: semver:~0.101.3
 spec:
   releaseName: home-assistant
   chart:
@@ -16,25 +16,25 @@ spec:
   values:
     image:
       repository: mdonoughe/home-assistant
-      tag: '0.97.2'
+      tag: "0.101.3"
     ingress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx
-        kubernetes.io/tls-acme: 'true'
-        nginx.ingress.kubernetes.io/proxy-read-timeout: '3600'
-        nginx.ingress.kubernetes.io/proxy-send-timeout: '3600'
+        kubernetes.io/tls-acme: "true"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
       hosts:
-      - home.okayserver.gq
-      tls:
-      - hosts:
         - home.okayserver.gq
-        secretName: home-assistant-tls
+      tls:
+        - hosts:
+            - home.okayserver.gq
+          secretName: home-assistant-tls
     persistence:
       enabled: true
       existingClaim: home-assistant
     devices:
-    - zwave
+      - zwave
     dbus: /run/dbus/system_bus_socket
     usePodSecurityContext: true
     privileged: true
@@ -47,7 +47,7 @@ metadata:
 spec:
   storageClassName: local-storage
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 8Gi
