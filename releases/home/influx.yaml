@@ -28,31 +28,14 @@ spec:
       enabled: true
       scripts:
         init.iql: |+
-          -- Home Assistant history database
           CREATE DATABASE home_assistant
         rtlamr.iql: |+
-          -- Data aggregation for rtlamr.
-          -- Copyright (C) 2017 Douglas Hall
-          --
-          -- This program is free software: you can redistribute it and/or modify
-          -- it under the terms of the GNU Affero General Public License as published
-          -- by the Free Software Foundation, either version 3 of the License, or
-          -- (at your option) any later version.
-          --
-          -- This program is distributed in the hope that it will be useful,
-          -- but WITHOUT ANY WARRANTY; without even the implied warranty of
-          -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-          -- GNU Affero General Public License for more details.
-          --
-          -- You should have received a copy of the GNU Affero General Public License
-          -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
           CREATE DATABASE rtlamr
 
           ALTER RETENTION POLICY "autogen" ON "rtlamr" DURATION 1w REPLICATION 1 SHARD DURATION 1h DEFAULT
           CREATE RETENTION POLICY "30d_1h"  ON "rtlamr" DURATION 30d REPLICATION 1 SHARD DURATION 1d
           CREATE RETENTION POLICY "5y_1d"  ON "rtlamr" DURATION 1825d REPLICATION 1 SHARD DURATION 30d
-
+        rtlamr-query-hour.iql: |+
           CREATE CONTINUOUS QUERY "1h_power" ON "rtlamr"
           RESAMPLE EVERY 1h FOR 2h
           BEGIN
@@ -63,7 +46,7 @@ spec:
             GROUP BY time(1h), *
             TZ('Etc/UTC')
           END;
-
+        rtlamr-query-day.iql: |+
           CREATE CONTINUOUS QUERY "1d_power" ON "rtlamr"
           RESAMPLE EVERY 1d FOR 2d
           BEGIN
