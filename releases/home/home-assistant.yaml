@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: mdonoughe/home-assistant
-      tag: "0.101.3-fan"
+      tag: "0.101.3-fan2"
     ingress:
       enabled: true
       annotations:
