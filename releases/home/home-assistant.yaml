@@ -5,8 +5,8 @@ metadata:
   name: home-assistant
   namespace: home
   annotations:
-    fluxcd.io/automated: "false"
-    fluxcd.io/tag.chart-image: semver:~0.101.3
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.chart-image: semver:~0.102.1
 spec:
   releaseName: home-assistant
   chart:
@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: mdonoughe/home-assistant
-      tag: "0.101.3-fan2"
+      tag: "0.102.1"
     ingress:
       enabled: true
       annotations:
