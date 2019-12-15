@@ -22,7 +22,7 @@ spec:
       hostNetwork: true
       kind: DaemonSet
       service:
-        enabled: false
+        type: ClusterIP
     defaultBackend:
       image:
         repository: k8s.gcr.io/defaultbackend-amd64
