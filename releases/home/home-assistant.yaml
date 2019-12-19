@@ -5,8 +5,8 @@ metadata:
   name: home-assistant
   namespace: home
   annotations:
-    fluxcd.io/automated: "false"
-    fluxcd.io/tag.chart-image: semver:~0.103.0
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.chart-image: semver:~0.103.2
 spec:
   releaseName: home-assistant
   chart:
