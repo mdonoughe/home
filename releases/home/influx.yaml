@@ -16,24 +16,24 @@ spec:
   values:
     image:
       repository: influxdb
-      tag: "1.7.9"
+      tag: "1.7.10"
     env:
-      - name: INFLUXDB_ADMIN_USER
-        value: home_assistant
-      - name: INFLUXDB_ADMIN_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: influx-secret
-            key: password
+    - name: INFLUXDB_ADMIN_USER
+      value: home_assistant
+    - name: INFLUXDB_ADMIN_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: influx-secret
+          key: password
     config:
       http:
         auth_enabled: true
     initScripts:
       enabled: true
       scripts:
-        init.iql: |+
+        init.iql: |
           CREATE DATABASE home_assistant
-        rtlamr.sh: |+
+        rtlamr.sh: |
           influx -host 127.0.0.1 -port $INFLUXDB_INIT_PORT -username ${INFLUXDB_ADMIN_USER} -password ${INFLUXDB_ADMIN_PASSWORD} <<EOF
             CREATE DATABASE rtlamr;
 
@@ -68,12 +68,12 @@ spec:
       size: 8Gi
       storageClass: local-storage
   valueFileSecrets:
-    - name: influx-secret
+  - name: influx-secret
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
-  creationTimestamp: null
+  creationTimestamp:
   name: influx-secret
   namespace: home
 spec:
